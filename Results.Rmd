@@ -1,0 +1,27 @@
+---
+title: "Results"
+author: "Hurricane Irene (2011)"
+date: "11/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+From Haviland's code
+```{r}
+library(tidyverse)
+library(drat)
+addRepo("geanders")
+install.packages("hurricaneexposuredata")
+
+library(hurricaneexposuredata)
+library(hurricaneexposure)
+
+data("hurr_tracks")
+
+data("rain")
+
+head(hurr_tracks)
+```
