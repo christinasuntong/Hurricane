@@ -6,7 +6,7 @@ library(magrittr)
 ### "before the year" and "after the year"
 
 
-buoys <- c("41037")
+buoys <- c("41037", "41110", "41025", "HCGN7")
 
 url1 <-  "http://www.ndbc.noaa.gov/view_text_file.php?filename="
 url2 <- ".txt.gz&dir=data/historical/stdmet/"
@@ -18,7 +18,7 @@ for (b in buoys){
 
 
 
-filenames <- str_c("mr", years, sep = "")
+filenames <- str_c("mr", buoys, sep = "")
 
 ###  Read the data from the website
 
@@ -30,12 +30,12 @@ for (i in 1:N){
     )
   
   
-   if(colnames(file)=="YY"){
-     yr = file[1,1]
-     yr = paste0("19", yr)
-     file %<>% rename(YYYY=YY)
-     file$YYYY <- rep(yr, nrow(file))
-   }
+   # if(colnames(file)=="YY"){
+   #   yr = file[1,1]
+   #   yr = paste0("19", yr)
+   #   file %<>% rename(YYYY=YY)
+   #   file$YYYY <- rep(yr, nrow(file))
+   # }
    
    
    assign(filenames[i], file)
