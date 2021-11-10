@@ -23,32 +23,32 @@ N <- length(urls)
 for (i in 1:N){
   suppressMessages(  ###  This stops the annoying messages on your screen.
     file <- read_table(urls[i], col_names = TRUE)
-  )
+    )
   
   
-  if(colnames(file)=="YY"){
-    yr = file[1,1]
-    yr = paste0("19", yr)
-    file %<>% rename(YYYY=YY)
-    file$YYYY <- rep(yr, nrow(file))
-  }
+   if(colnames(file)=="YY"){
+     yr = file[1,1]
+     yr = paste0("19", yr)
+     file %<>% rename(YYYY=YY)
+     file$YYYY <- rep(yr, nrow(file))
+   }
+   
+   
+   assign(filenames[i], file)
+    
+ # file <- get(filenames[i]) ## get() returns the value of an object
+                             ## when the arguement is the name of the 
+                             ## object -- as a string.
   
+                             ## example:
+                             ## a <- c(1,3)
+                             ## b <- get(a)  throws and error
+                             ##
+                             ## b <- get('a')
+                             ## b
+                             ## [1] 1 3
   
-  assign(filenames[i], file)
-  
-  # file <- get(filenames[i]) ## get() returns the value of an object
-  ## when the arguement is the name of the 
-  ## object -- as a string.
-  
-  ## example:
-  ## a <- c(1,3)
-  ## b <- get(a)  throws and error
-  ##
-  ## b <- get('a')
-  ## b
-  ## [1] 1 3
-  
-  
+ 
   
   
   # put '19' in front of 2 digit years
