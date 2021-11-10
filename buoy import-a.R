@@ -5,14 +5,18 @@ library(magrittr)
 ### make URLs by splitting the URL into two pieces --
 ### "before the year" and "after the year"
 
-url1 <- "http://www.ndbc.noaa.gov/view_text_file.php?filename=44013h"
+
+buoys <- c("41037")
+
+url1 <-  "http://www.ndbc.noaa.gov/view_text_file.php?filename="
 url2 <- ".txt.gz&dir=data/historical/stdmet/"
+urls <- c()
+
+for (b in buoys){
+  urls <- append(urls, paste0(url1, b, "h2011", url2))
+}
 
 
-years <- c(1987:2016)
-
-
-urls <- str_c(url1, years, url2, sep = "")
 
 filenames <- str_c("mr", years, sep = "")
 
