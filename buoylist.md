@@ -1,0 +1,10 @@
+**Buoy list**  
+Station BFTN7;  34.717N 76.671W  
+Station CLKN7;  34.622N 76.525W  
+Station 41037;  33.988N 77.362W  
+Station ZBQN7;  33.955N 77.935W  
+Station JMPN7;  34.213N 77.786W  
+Station 41110;  34.142N 77.715W  
+Station 41025;  35.010N 75.454W  
+Station HCGN7;  35.209N 75.704W  
+Station 41120;  35.259N 75.286W  
