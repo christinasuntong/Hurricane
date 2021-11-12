@@ -6,7 +6,7 @@ library(magrittr)
 ### "before the year" and "after the year"
 
 
-buoys <- c("41037", "41110", "41025", "HCGN7")
+buoys <- c("41037", "41110", "41025")
 
 url1 <-  "http://www.ndbc.noaa.gov/view_text_file.php?filename="
 url2 <- ".txt.gz&dir=data/historical/stdmet/"
