@@ -5,6 +5,11 @@ date: "11/8/2021"
 output: html_document
 ---
 
+
+https://www.weather.gov/mhx/Aug272011EventReview
+
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -31,7 +36,7 @@ head(hurr_tracks)
 ```{r}
 storm <- "Irene-2011"
 
-map_counties(storm = "Irene-2011", metric = "rainfall") +
+map_counties(storm = "Irene-2011", metric = "wind") +
     ggtitle("Irene-2011") +
     theme(plot.title = element_text(hjust = 0.5))
 
