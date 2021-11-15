@@ -1,5 +1,6 @@
 library(tidyverse)
 library(magrittr)
+library(lubridate)
 
 ### reading data from buoy 44013  --  outside Boston harbor
 ### make URLs by splitting the URL into two pieces --
@@ -38,8 +39,10 @@ for (i in 1:N){
   suppressMessages(  ###  This stops the annoying messages on your screen.
     file <- read_table(urls[i], col_names = TRUE)
     )
+    file$date_time <- make_datetime(year = 2011, month = as.integer(file$MM), day = as.integer(file$DD), hour = as.integer(file$hh), min = as.integer(file$mm))
   
-  
+    file <- file[file$date_time>"2011-08-19 00:0:00 UTC",]
+    file <- file[file$date_time<"2011-08-29 00:0:00 UTC",]
    # if(colnames(file)=="YY"){
    #   yr = file[1,1]
    #   yr = paste0("19", yr)
