@@ -9,8 +9,7 @@ https://www.ndbc.noaa.gov/view_text_file.php?filename=44056h2011.txt.gz&dir=data
 https://www.ndbc.noaa.gov/view_text_file.php?filename=41025h2011.txt.gz&dir=data/historical/stdmet/
 
 
-**Plots comparing wind speed from Irene_tracks and one bouy(mr41037)
-**
+## Plots comparing wind speed from Irene_tracks and one bouy(mr41037)
 
 library(dplyr)
 library(tidyr)
@@ -30,8 +29,8 @@ wind_Irene <- ht %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
   ggtitle("Wind change of Irene")
 
 
-# mr 41037 date within Irene
-# 33.988N 77.362W 
+## mr 41037 date within Irene
+## 33.988N 77.362W 
 mr41037 <- mr41037[-1, ]
 date_mr41037 <- mr41037 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
 date_mr41037$date <- ymd_hm(date_mr41037$date)
