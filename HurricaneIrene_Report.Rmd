@@ -1,30 +1,29 @@
 ---
-title: "HurricaneIrene_Report"
-author: "Rose Determan"
+title: "Hurricane Irene Report"
 date: "11/17/2021"
 output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+```
+# Introduction  (Rose)
+Hurricane Irene was a tropical cyclone that impacted the Caribbean, the Atlantic coast of the United States and Canada in late August of 2011. The storm made landfall in North Carolina on August 27th and, as a result, there were five deaths. Peak wind speeds were 115 mph.  
+This storm caused extensive damage to infrastructure along the coast. 
+
+```{r, fig.align = 'center', out.width = "75%", fig.cap = "Hurricane Irene making landfall at 07:49 on August 27, 2011 Source: https://www.weather.gov/mhx/Aug272011EventReview"}
+knitr::include_graphics(here::here("landfall.jpg"))
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# EDA  (Rose and Christina)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Map of Landfall Area  (Christina)
 
-```{r cars}
-summary(cars)
-```
+# Map of Windspeed  (Karida)
 
-## Including Plots
+# Comparison of hurricane exposure and buoy data  (Clare)
 
-You can also embed plots, for example:
+# Variogram  (Karida)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# Conclusions 
