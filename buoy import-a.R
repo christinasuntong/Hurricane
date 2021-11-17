@@ -55,5 +55,5 @@ for (i in 1:N){
 }
 all_buoys$WSPD <- as.numeric(all_buoys$WSPD)
 
-all_buoys %<>% filter(WSPD<999)
+all_buoys %<>% filter(WSPD<99)
 
