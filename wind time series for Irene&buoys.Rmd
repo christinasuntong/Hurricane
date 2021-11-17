@@ -1,0 +1,182 @@
+---
+title: "wind time series for Irene&buoys"
+author: "Clare Tang"
+date: "2021/11/17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(plotly)
+library(ggpubr)
+```
+
+## plots comparing wind speed from Irene and bouys
+
+```{r}
+
+ht <- hurr_tracks %>% filter(storm_id == "Irene-2011")
+# Irene_track <- ht %>% separate(col = date, 
+#                 into = c("YY", "MM", "DD", "hh", "mm"), 
+#                 sep = c(4, 6, 8, 10))
+
+str(ht)
+ht$date <- ymd_hm(ht$date)
+
+wind_Irene <- ht %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
+  # geom_point()+
+  geom_line()+
+  ggtitle("Wind change of Irene")
+
+
+```
+
+
+# wind speed for buoys
+```{r}
+# mr41037, mr41110, mr44056, mrbftn7, mrclkn7, mrjmpn7, mrhcgn7
+
+# define buoys date range from Irene
+date_l <- as.POSIXct(min(ht$date))
+date_u <- as.POSIXct(max(ht$date))
+rng <- interval(date_l, date_u)
+
+
+# mr41037
+mr41037 <- mr41037[-1, ]
+mr41037$WSPD <- as.numeric(mr41037$WSPD)
+date_mr41037 <- mr41037 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+date_mr41037$date <- ymd_hm(date_mr41037$date)
+
+
+August_mr41037 <- date_mr41037[date_mr41037$date %within% rng, ]
+
+wind_mr41037 <- ggplot(August_mr41037, aes(x = date, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind change by mr41037")
+
+
+# mrbftn7
+mrbftn7 <- mrbftn7[-1, ]
+mrbftn7$WSPD <- as.numeric(mrbftn7$WSPD)
+mrbftn7 <- mrbftn7 %>% filter(WSPD != 99)
+date_mrbftn7 <- mrbftn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+date_mrbftn7$date <- ymd_hm(date_mrbftn7$date)
+
+August_mrbftn7 <- date_mrbftn7[date_mrbftn7$date %within% rng, ]
+
+wind_mrbftn7 <- ggplot(August_mrbftn7, aes(x = date, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind change by mrbftn7")
+
+
+# mrclkn7
+mrclkn7 <- mrclkn7[-1, ]
+mrclkn7$WSPD <- as.numeric(mrclkn7$WSPD)
+date_mrclkn7 <- mrclkn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+date_mrclkn7$date <- ymd_hm(date_mrclkn7$date)
+
+August_mrclkn7 <- date_mrclkn7[date_mrclkn7$date %within% rng, ]
+
+wind_mrclkn7 <- ggplot(August_mrclkn7, aes(x = date, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind change by mrclkn7")
+
+
+# mrjmpn7
+mrjmpn7 <- mrjmpn7[-1, ]
+mrjmpn7$WSPD <- as.numeric(mrjmpn7$WSPD)
+date_mrjmpn7 <- mrjmpn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+date_mrjmpn7$date <- ymd_hm(date_mrjmpn7$date)
+
+August_mrjmpn7 <- date_mrjmpn7[date_mrjmpn7$date %within% rng, ]
+August_mrjmpn7 <- August_mrjmpn7 %>% filter(WSPD != 99)
+
+wind_mrjmpn7 <- ggplot(August_mrjmpn7, aes(x = date, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind change by mrjmpn7")
+
+
+# mrhcgn7
+mrhcgn7 <- mrhcgn7[-1, ]
+mrhcgn7$WSPD <- as.numeric(mrhcgn7$WSPD)
+mrhcgn7 <- mrhcgn7 %>% filter(WSPD != 99)
+date_mrhcgn7 <- mrhcgn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+date_mrhcgn7$date <- ymd_hm(date_mrhcgn7$date)
+
+August_mrhcgn7 <- date_mrhcgn7[date_mrhcgn7$date %within% rng, ]
+
+wind_mrhcgn7 <- ggplot(August_mrhcgn7, aes(x = date, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind change by mrhcgn7")
+
+
+
+
+# # mr41110
+# mr41110 <- mr41110[-1, ]
+# date_mr41110 <- mr41110 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+# date_mr41110$date <- ymd_hm(date_mr41110$date)
+# date_mr41110$WSPD <- as.numeric(date_mr41110$WSPD)
+# 
+# August_mr41110 <- date_mr41110[date_mr41110$date %within% rng, ]
+# 
+# wind_mr41110 <- ggplot(August_mr41110, aes(x = date, y = WSPD), pch = 20)+
+#   geom_line()+
+#   geom_point()+
+#   ggtitle("Wind change by mr41110")
+# 
+# # mr44056
+# mr44056 <- mr44056[-1, ]
+# date_mr44056 <- mr44056 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+# date_mr44056$date <- ymd_hm(date_mr44056$date)
+# date_mr44056$WSPD <- as.numeric(date_mr44056$WSPD)
+# 
+# August_mr44056 <- date_mr44056[date_mr44056$date %within% rng, ]
+# 
+# wind_mr44056 <- ggplot(August_mr44056, aes(x = date, y = WSPD), pch = 20)+
+#   geom_line()+
+#   geom_point()+
+#   ggtitle("Wind change by mr44056")
+
+
+```
+
+
+# combined plot
+```{r, fig.width=8, fig.height=10}
+
+ggarrange(wind_Irene, 
+          wind_mr41037,
+          wind_mrbftn7, 
+          wind_mrclkn7, 
+          wind_mrjmpn7, 
+          wind_mrhcgn7, 
+          ncol = 1, nrow = 6)
+
+# Irene plot shows that the maximum wind speed arrived between Aug 24 and Aug 25
+# landfall buoys shows that the maximum wind speed arrived between Aug 27 and Aug 28
+# Irene arrived landfall between Aug 27 and Aug 28? but this is not the time when Irene had its highest wind speed
+
+
+```
+
+
+```{r, fig.width=14, fig.height=8}
+
+ggplot()+
+  geom_line(data = August_mr41037, aes(x = date, y = WSPD))+
+  geom_line(data = August_mrbftn7, aes(x = date, y = WSPD))+
+  geom_line(data = August_mrclkn7, aes(x = date, y = WSPD))+
+  geom_line(data = August_mrjmpn7, aes(x = date, y = WSPD))+
+  geom_line(data = August_mrhcgn7, aes(x = date, y = WSPD))+
+  ggtitle("Wind change of all bouys")
+
+
+```
+
