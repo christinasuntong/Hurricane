@@ -137,19 +137,24 @@ ggarrange(wind_Irene,
 # Irene arrived landfall between Aug 27 and Aug 28? but this is not the time when Irene had its highest wind speed
 
 
+
+
+
 ```
 
 
 ```{r, fig.width=14, fig.height=8}
 
-ggplot()+
-  geom_line(data = August_41037, aes(x = date, y = WSPD))+
-  geom_line(data = August_bftn7, aes(x = date, y = WSPD))+
-  geom_line(data = August_clkn7, aes(x = date, y = WSPD))+
-  geom_line(data = August_jmpn7, aes(x = date, y = WSPD))+
-  geom_line(data = August_hcgn7, aes(x = date, y = WSPD))+
-  ggtitle("Wind change of all bouys")
+# ggplot()+
+#   geom_line(data = August_41037, aes(x = date, y = WSPD))+
+#   geom_line(data = August_bftn7, aes(x = date, y = WSPD))+
+#   geom_line(data = August_clkn7, aes(x = date, y = WSPD))+
+#   geom_line(data = August_jmpn7, aes(x = date, y = WSPD))+
+#   geom_line(data = August_hcgn7, aes(x = date, y = WSPD))+
+#   ggtitle("Wind change of all bouys")
 
+ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
+  geom_line()
 
 ```
 
