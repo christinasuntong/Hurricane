@@ -22,59 +22,28 @@ library(readr)
 ```
 
 ```{r }
-#https://www.ndbc.noaa.gov/measdes.shtml
-#Wind speed -- WSPD
-#Air temp -- ATMP
-#41037 33.988 -77.362 --
-#BFTN7 34.717 -76.671 --
-#JMPN7 34.213 -77.786 --
-#41110 34.142 -77.715 --
-#41025 35.010 -75.454 --
-#HCGN7 35.209 -75.704
-#CLKN7 34.622 -76.525 --
-#44056 36.200 -75.714 --
-#"41037" "41110" "41025" "44056" "bftn7" "clkn7" "jmpn7" "hcgn7" 
-
-df1 <- mr41037 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "41037",lat = 33.988,lon = -77.362,
-                                                     Code="NC",State="North Carolina")
-#df2 <- mr41110 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "41110",lat = 34.142,lon = -75.454)
-#df3 <- mr41025 %>% select(DD, WSPD, ATMP, TIDE, APD) %>% mutate(buoy = "41025",lat = 35.010,lon = -77.715)
-#df4 <- mr44056 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "44056",lat = 36.200,lon = -75.714)
-df5 <- mrbftn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "bftn7",lat = 34.717,lon = -76.671,
-                                                     Code="NC",State="North Carolina")
-df6 <- mrclkn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "clkn7",lat = 34.622,lon = -76.525,
-                                                     Code="NC",State="North Carolina")
-df7 <- mrjmpn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "jmpn7",lat = 34.213,lon = -77.786,
-                                                     Code="NC",State="North Carolina")
-df8 <- mrhcgn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "hcgn7",lat = 35.209,lon = -75.704,
-                                                     Code="NC",State="North Carolina")
-df.row <- bind_rows(df1,df5,df6,df7,df8)
-df.row$WSPD <- as.numeric(df.row$WSPD)
-df.row$ATMP <- as.numeric(df.row$ATMP)
-df.row$TIDE <- as.numeric(df.row$TIDE)
-
 df.row <- all_buoys
+df.row$DD <- as.numeric(df.row$DD)
 #by.map <- plyr::ddply(df.row,c("id", "DD"),numcolwise(mean)) #avg of each factor by date & buoy
-by.map <- df.row %>% 
-  mutate(date = floor_date(date_time)) %>%
-  group_by(date) %>%
+by.map <- df.row %>%
+  group_by(DD, id,lat,lon) %>%
   summarize(mean = mean(WSPD))
 
 
-fig1 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
+fig1 <- plot_geo(data =by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
        add_markers(sizes = c(50, 250),
-             text = ~paste(WSPD, paste("buoy:",buoy), paste("lat:", lat), paste("lon:", lon), sep = "<br />"),
+             #text = ~paste(WSPD, paste("buoy:",buoy), paste("lat:", lat), paste("lon:", lon), sep = "<br />"),
              color = ~buoy, size = ~WSPD, hoverinfo = "text") %>% 
        layout(title = 'Average Daily Wind Speed(m/s) in August 2011')
 
 
-fig2 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
-       add_markers(
-             text = ~paste(ATMP, paste("buoy:",buoy), paste("lat:", lat), paste("lon:", lon), sep = "<br />"),
-             color = ~buoy, size = ~ATMP, hoverinfo = "text") %>% 
-       layout(title = 'Average Air Temperature(Celsius) in August 2011')
+# fig2 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
+#        add_markers(
+#              text = ~paste(ATMP, paste("buoy:",buoy), paste("lat:", lat), paste("lon:", lon), sep = "<br />"),
+#              color = ~buoy, size = ~ATMP, hoverinfo = "text") %>% 
+#        layout(title = 'Average Air Temperature(Celsius) in August 2011')
 fig1
-fig2
+#fig2
 #ATMP, WTMP, APD, TIDE don't fluctuate much
 ```
 
@@ -82,8 +51,8 @@ fig2
 vio41037.WSPD <- df.row %>%
   plot_ly(type = 'violin') %>%
   add_trace(
-    x = ~DD[df.row$buoy == '41037'],
-    y = ~WSPD[df.row$buoy == '41037'],
+    x = ~DD[df.row$id == '41037'],
+    y = ~WSPD[df.row$id == '41037'],
     legendgroup = '41037',
     scalegroup = '41037',
     name = '41037',
