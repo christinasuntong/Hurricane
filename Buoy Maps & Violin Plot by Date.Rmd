@@ -54,7 +54,13 @@ df.row$WSPD <- as.numeric(df.row$WSPD)
 df.row$ATMP <- as.numeric(df.row$ATMP)
 df.row$TIDE <- as.numeric(df.row$TIDE)
 
-by.map <- plyr::ddply(df.row,c("buoy", "DD"),numcolwise(mean)) #avg of each factor by date & buoy
+df.row <- all_buoys
+#by.map <- plyr::ddply(df.row,c("id", "DD"),numcolwise(mean)) #avg of each factor by date & buoy
+by.map <- df.row %>% 
+  mutate(date = floor_date(date_time)) %>%
+  group_by(date) %>%
+  summarize(mean = mean(WSPD))
+
 
 fig1 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
        add_markers(sizes = c(50, 250),
