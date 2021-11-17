@@ -35,12 +35,11 @@ library(readr)
 #44056 36.200 -75.714 --
 #"41037" "41110" "41025" "44056" "bftn7" "clkn7" "jmpn7" "hcgn7" 
 
-#Meteorological factors were selected based on the map below with obvious fluctuation 
 df1 <- mr41037 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "41037",lat = 33.988,lon = -77.362,
                                                      Code="NC",State="North Carolina")
-df2 <- mr41110 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "41110",lat = 34.142,lon = -75.454)
-#df3 <- mr41025 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "41025",lat = 35.010,lon = -77.715)
-df4 <- mr44056 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "44056",lat = 36.200,lon = -75.714)
+#df2 <- mr41110 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "41110",lat = 34.142,lon = -75.454)
+#df3 <- mr41025 %>% select(DD, WSPD, ATMP, TIDE, APD) %>% mutate(buoy = "41025",lat = 35.010,lon = -77.715)
+#df4 <- mr44056 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "44056",lat = 36.200,lon = -75.714)
 df5 <- mrbftn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "bftn7",lat = 34.717,lon = -76.671,
                                                      Code="NC",State="North Carolina")
 df6 <- mrclkn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "clkn7",lat = 34.622,lon = -76.525,
@@ -49,12 +48,11 @@ df7 <- mrjmpn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "jmpn7",lat = 
                                                      Code="NC",State="North Carolina")
 df8 <- mrhcgn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "hcgn7",lat = 35.209,lon = -75.704,
                                                      Code="NC",State="North Carolina")
-df.row <- bind_rows(df1,df2,df4,df5,df6,df7,df8)
+df.row <- bind_rows(df1,df5,df6,df7,df8)
 df.row$WSPD <- as.numeric(df.row$WSPD)
 df.row$ATMP <- as.numeric(df.row$ATMP)
-df.row$TIDE <- as.numeric(df.row$TIDE)
-
-by.map <- plyr::ddply(df.row,c("buoy", "DD"),numcolwise(mean)) #avg of each factor by date & buoy
+df.row$PRES <- as.numeric(df.row$PRES)
+by.map <- plyr::ddply(df.row,c("buoy", "DD"),numcolwise(mean))
 
 fig1 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
        add_markers(sizes = c(50, 250),
@@ -70,13 +68,11 @@ fig2 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lo
        layout(title = 'Average Air Temperature(Celsius) in August 2011')
 fig1
 fig2
-#APD, TIDE don't fluctuate much, so we don't select them
+#ATMP, WTMP, APD, TIDE don't fluctuate much
 ```
 
 ```{r }
-#Based on the map above, we found that the index recorded by 41037 during the days of 26-28 influcated a lot
-#WSPD Wind Speed(m/s)
-vio41037 <- df.row %>%
+vio41037.WSPD <- df.row %>%
   plot_ly(type = 'violin') %>%
   add_trace(
     x = ~DD[df.row$buoy == '41037'],
@@ -102,8 +98,10 @@ vio41037 <- df.row %>%
     )
   )
 
+vio41037.WSPD
 
-#ATMP Air Temperature(Celsius)
+
+
 vio41037.ATMP <- df.row %>%
   plot_ly(type = 'violin') %>%
   add_trace(
@@ -130,7 +128,6 @@ vio41037.ATMP <- df.row %>%
     )
   )
 
-#PRES Sea level pressure (hPa)
 vio41037.PRES <- df.row %>%
   plot_ly(type = 'violin') %>%
   add_trace(
