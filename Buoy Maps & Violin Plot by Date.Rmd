@@ -51,7 +51,6 @@ df8 <- mrhcgn7 %>% select(DD, WSPD, ATMP, PRES) %>% mutate(buoy = "hcgn7",lat = 
 df.row <- bind_rows(df1,df5,df6,df7,df8)
 df.row$WSPD <- as.numeric(df.row$WSPD)
 df.row$ATMP <- as.numeric(df.row$ATMP)
-<<<<<<< HEAD
 df.row$TIDE <- as.numeric(df.row$TIDE)
 
 df.row <- all_buoys
