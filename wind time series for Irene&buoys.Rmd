@@ -141,13 +141,8 @@ ggarrange(wind_Irene,
 
 ```{r, fig.width=14, fig.height=8}
 
-ggplot()+
-  geom_line(data = August_41037, aes(x = date, y = WSPD))+
-  geom_line(data = August_bftn7, aes(x = date, y = WSPD))+
-  geom_line(data = August_clkn7, aes(x = date, y = WSPD))+
-  geom_line(data = August_jmpn7, aes(x = date, y = WSPD))+
-  geom_line(data = August_hcgn7, aes(x = date, y = WSPD))+
-  ggtitle("Wind change of all bouys")
-
-
+# wind speed plot for five buoys
+ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
+  geom_line()
+  
 ```
