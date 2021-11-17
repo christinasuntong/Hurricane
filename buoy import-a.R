@@ -30,7 +30,7 @@ for (b in buoys){
 
 
 filenames <- str_c("mr", buoys, sep = "")
-
+all_buoys <- c()
 ###  Read the data from the website
 
 N <- length(urls)
@@ -43,11 +43,11 @@ for (i in 1:N){
   
     file <- file[file$date_time>"2011-08-19 00:0:00 UTC",]
     file <- file[file$date_time<"2011-08-29 00:0:00 UTC",]
-
+    file$id <- filenames[i]
     #create buoy id, lat, long
     #append to a complete dataset of all buoys
    
-   
+   all_buoys <- rbind(all_buoys, file)
    assign(filenames[i], file)
     
  # file <- get(filenames[i]) ## get() returns the value of an object
@@ -81,5 +81,3 @@ for (i in 1:N){
   
   
 }
-
-rbind(mr41025, mr41037)
