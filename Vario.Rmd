@@ -1,0 +1,47 @@
+---
+title: "Variogram-H"
+author: "Yongrong Chai"
+date: "11/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(sp)
+library(gstat)
+```
+
+
+```{r }
+v_df = hurr_tracks[ which(hurr_tracks$storm_id == "Irene-2011"),]
+v_df=na.omit(v_df)
+
+#convert data frame into a spatial data frame object
+coordinates(v_df)= ~ latitude+longitude
+# create a plot with the random values
+v_df %>% as.data.frame %>% 
+  ggplot(aes(latitude, longitude)) + geom_point(aes(size=wind), color="blue", alpha=3/4) + 
+  ggtitle("Wind Speed (m/s)") + coord_equal() + theme_bw()
+coordinates(v_df)= ~ latitude+longitude
+#Histgram of wind
+hist(v_df$wind)
+```
+
+
+
+```{r }
+wind.vgm <- variogram(log(wind)~1, v_df) # calculates sample variogram values
+plot(wind.vgm)
+wind.vgm.model <- vgm( nugget = min(wind.vgm$gamma), 
+                       model="Gau", 
+                       psill=max(wind.vgm$gamma), 
+                       range = 15)
+
+#"fit" out variogram model to the variogram.
+FittedModel <- fit.variogram(wind.vgm, model=wind.vgm.model)    
+plot(wind.vgm, model=FittedModel, main="Variogram of Wind Speed of Irene2011")
+```
+
+```{r}
+
+```
