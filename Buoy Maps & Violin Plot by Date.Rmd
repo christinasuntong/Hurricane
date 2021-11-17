@@ -60,10 +60,6 @@ by.map <- df.row %>%
   group_by(date) %>%
   summarize(mean = mean(WSPD))
 
-=======
-df.row$PRES <- as.numeric(df.row$PRES)
-by.map <- plyr::ddply(df.row,c("buoy", "DD"),numcolwise(mean))
->>>>>>> be8f7d165f2ccea8ce55a4dcd04df869b47cb8e9
 
 fig1 <- plot_geo(by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
        add_markers(sizes = c(50, 250),
