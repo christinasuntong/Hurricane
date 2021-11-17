@@ -7,15 +7,14 @@ library(lubridate)
 ### "before the year" and "after the year"
 
 
-buoys <- c("41037", "41110", "41025", "44056", "BFTN7", "CLKN7","JMPN7","HCGN7")
-buoys %<>% tolower() 
+
 
 buoy_coord <- data.frame(id = c("41037", "BFTN7", "JMPN7", "41110" , "41025", "HCGN7", "CLKN7", "44056"), 
                          lat = c(33.988,34.717,34.213,34.142, 35.010,35.209, 34.622,36.200 ),
                          lon = c(77.362,76.671,77.786, 77.715,75.454,75.704, 76.525, 75.714))
 
 buoy_coord$lon <- buoy_coord$lon * -1
-
+buoy_coord$id  %<>% tolower()
 
 
 
@@ -23,13 +22,16 @@ url1 <-  "https://www.ndbc.noaa.gov/view_text_file.php?filename="
 url2 <- ".txt.gz&dir=data/historical/stdmet/"
 urls <- c()
 
-for (b in buoys){
+for (b in buoy_coord$id){
   urls <- append(urls, paste0(url1, b, "h2011", url2))
 }
 
 
 
-filenames <- str_c("mr", buoys, sep = "")
+filenames <- buoy_coord$id
+filenames
+
+
 all_buoys <- c()
 ###  Read the data from the website
 
@@ -44,10 +46,13 @@ for (i in 1:N){
     file <- file[file$date_time>"2011-08-19 00:0:00 UTC",]
     file <- file[file$date_time<"2011-08-29 00:0:00 UTC",]
     file$id <- filenames[i]
+    file$lat <- buoy_coord$lat[i]
+    file$lon <- buoy_coord$lon[i]
     #create buoy id, lat, long
     #append to a complete dataset of all buoys
    
    all_buoys <- rbind(all_buoys, file)
+   
    assign(filenames[i], file)
     
  # file <- get(filenames[i]) ## get() returns the value of an object
