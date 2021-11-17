@@ -25,9 +25,6 @@ urls <- c()
 for (b in buoy_coord$id){
   urls <- append(urls, paste0(url1, b, "h2011", url2))
 }
-
-
-
 filenames <- buoy_coord$id
 filenames
 
@@ -54,35 +51,9 @@ for (i in 1:N){
    all_buoys <- rbind(all_buoys, file)
    
    assign(filenames[i], file)
-    
- # file <- get(filenames[i]) ## get() returns the value of an object
-                             ## when the arguement is the name of the 
-                             ## object -- as a string.
-  
-                             ## example:
-                             ## a <- c(1,3)
-                             ## b <- get(a)  throws and error
-                             ##
-                             ## b <- get('a')
-                             ## b
-                             ## [1] 1 3
-  
- 
-  
-  
-  # put '19' in front of 2 digit years
-  # check that all columns are included
-  # filter down to only the 1 daily observation that you want
-  # etc etc etc
-  
-  # if(i == 1){
-  #   MR <- file
-  # }
-  # 
-  # else{
-  #   MR <- rbind.data.frame(MR, file)
-  # }
-  
-  
   
 }
+all_buoys$WSPD <- as.numeric(all_buoys$WSPD)
+
+all_buoys %<>% filter(WSPD<999)
+
