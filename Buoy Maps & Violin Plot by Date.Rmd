@@ -27,13 +27,13 @@ df.row$DD <- as.numeric(df.row$DD)
 #by.map <- plyr::ddply(df.row,c("id", "DD"),numcolwise(mean)) #avg of each factor by date & buoy
 by.map <- df.row %>%
   group_by(DD, id,lat,lon) %>%
-  summarize(mean = mean(WSPD))
+  summarize(WSPD = mean(WSPD))
 
 
 fig1 <- plot_geo(data =by.map, locationmode = 'USA-states',frame = ~DD, lat = ~lat, lon = ~lon)%>%
        add_markers(sizes = c(50, 250),
              #text = ~paste(WSPD, paste("buoy:",buoy), paste("lat:", lat), paste("lon:", lon), sep = "<br />"),
-             color = ~buoy, size = ~WSPD, hoverinfo = "text") %>% 
+             color = ~id, size = ~WSPD*10, hoverinfo = "text") %>% 
        layout(title = 'Average Daily Wind Speed(m/s) in August 2011')
 
 
