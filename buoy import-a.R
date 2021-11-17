@@ -43,12 +43,9 @@ for (i in 1:N){
   
     file <- file[file$date_time>"2011-08-19 00:0:00 UTC",]
     file <- file[file$date_time<"2011-08-29 00:0:00 UTC",]
-   # if(colnames(file)=="YY"){
-   #   yr = file[1,1]
-   #   yr = paste0("19", yr)
-   #   file %<>% rename(YYYY=YY)
-   #   file$YYYY <- rep(yr, nrow(file))
-   # }
+
+    #create buoy id, lat, long
+    #append to a complete dataset of all buoys
    
    
    assign(filenames[i], file)
@@ -85,3 +82,4 @@ for (i in 1:N){
   
 }
 
+rbind(mr41025, mr41037)
