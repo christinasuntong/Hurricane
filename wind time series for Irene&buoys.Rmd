@@ -59,7 +59,7 @@ August_41037 <- date_41037[date_41037$date %within% rng, ]
 
 wind_41037 <- ggplot(August_41037, aes(x = date, y = WSPD))+
   geom_line()+
-  ggtitle("Wind change by mr41037")
+  ggtitle("Wind change by 41037")
 
 
 # bftn7
@@ -114,7 +114,7 @@ August_hcgn7 <- date_hcgn7[date_hcgn7$date %within% rng, ]
 
 wind_hcgn7 <- ggplot(August_hcgn7, aes(x = date, y = WSPD))+
   geom_line()+
-  ggtitle("Wind change by mrhcgn7")
+  ggtitle("Wind change by hcgn7")
 
 
 ```
