@@ -39,9 +39,27 @@ wind.vgm.model <- vgm( nugget = min(wind.vgm$gamma),
 
 #"fit" out variogram model to the variogram.
 FittedModel <- fit.variogram(wind.vgm, model=wind.vgm.model)    
-plot(wind.vgm, model=FittedModel, main="Variogram of Wind Speed of Irene2011")
+plot(wind.vgm, model=FittedModel, main="Variogram of Wind Speed of Irene2011 \n based on hurr_track")
 ```
 
 ```{r}
+by.map <- na.omit(by.map)
+by.map %>% as.data.frame %>% 
+  ggplot(aes(lat, lon)) + geom_point(aes(size=WSPD), color="purple", alpha=3/4) + 
+  ggtitle("Wind Speed (m/s) from Buoys") + coord_equal() + theme_bw()
+coordinates(by.map)= ~ lat+lon
+#Histgram of wind
+hist(by.map$WSPD)
 
+
+WSPD.vgm2 <- variogram(log(WSPD)~1, by.map) # calculates sample variogram values
+plot(WSPD.vgm2)
+WSPD.vgm.model2 <- vgm( nugget = min(WSPD.vgm2$gamma), 
+                       model="Gau", 
+                       psill=max(WSPD.vgm2$gamma), 
+                       range = 1) # range of dist
+
+#"fit" out variogram model to the variogram.
+FittedModel3 <- fit.variogram(WSPD.vgm2, model=WSPD.vgm.model2, fit.method = 2)    
+plot(WSPD.vgm2, model=FittedModel3, main="Variogram of Wind Speed of Irene2011 \n based on Buoys")
 ```
