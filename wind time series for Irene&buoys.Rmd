@@ -124,6 +124,7 @@ wind_hcgn7 <- ggplot(August_hcgn7, aes(x = date, y = WSPD))+
 
 # combined plot
 ```{r, fig.width=8, fig.height=10}
+# Sys.setlocale("LC_ALL", "English")
 
 ggarrange(wind_Irene, 
           wind_41037,
@@ -144,7 +145,7 @@ ggarrange(wind_Irene,
 ```
 
 
-```{r, fig.width=14, fig.height=8}
+```{r, fig.width=18, fig.height=8}
 
 
 # ggplot()+
@@ -157,7 +158,7 @@ ggarrange(wind_Irene,
 
 # wind speed plot for five buoys
 ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
-  geom_line()
-  
+  geom_line()+
+  ggtitle("Wind speed of buoys")
 
 ```
