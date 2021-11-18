@@ -1,0 +1,30 @@
+---
+title: "HurricanIrene_Report"
+output: pdf_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+# Introduction  (Rose)
+```{r, fig.align = 'center', out.width = "50%", fig.cap = "Hurricane Irene making landfall at 07:49 on August 27, 2011 Source: https://www.weather.gov/mhx/Aug272011EventReview"}
+knitr::include_graphics(here::here("landfall.jpg"))
+```
+Hurricane Irene was a category 1 tropical cyclone that impacted the Caribbean, the Atlantic coast of the United States and Canada in late August of 2011. The storm made landfall in North Carolina on August 27th. Due to the storm, there were five deaths. Peak wind speeds were 115 mph, and several tornadoes formed in addition to the hurricane. This storm caused extensive damage to infrastructure along the coast. 
+```{r, fig.align = 'center', out.width = "75%", fig.cap = "Storm damage in Eastern North Carolina as a result of Hurricane Irene.  Source: https://www.weather.gov/mhx/Aug272011EventReview"}
+knitr::include_graphics(here::here("Irene-damage5.jpg"))
+```
+
+
+# EDA  (Rose and Christina)
+
+# Map of Landfall Area  (Christina)
+
+# Map of Windspeed  (Karida)
+
+# Comparison of hurricane exposure and buoy data  (Clare)
+
+# Variogram  (Karida)
+
+# Conclusions 
