@@ -1,5 +1,7 @@
 ---
-title: "HurricanIrene_Report"
+title: "Hurricane Irene Landfall Report"
+author: "Irene Group: Rose Determan, Yongrong Chai, Zike Tang, Tong Sun"
+date: "11/19/2021"
 output: pdf_document
 ---
 
@@ -22,9 +24,34 @@ knitr::include_graphics(here::here("Irene-damage5.jpg"))
 # Map of Landfall Area  (Christina)
 
 # Map of Windspeed  (Karida)
+```{r, fig.align = 'center', out.width = "80%"}
+knitr::include_graphics(here::here("WindSpeed1.png"))
+```
+The data source we used here was from NOAA Data Buoys, the dot on maps represent mean wind speed by date and each buoy, and it allowed us to see how winds speed varied by days in August 2011. From August 25 to 27, we can see that the size of dot was increasing. So let's look at the plot below.
+
+```{r, fig.align = 'center', out.width = "70%"}
+knitr::include_graphics(here::here("WindSpeed2.png"))
+```
+It allowed us to observe the fluctuation clearly, and wind speed recorded from all buoys above reflect a similar tendency, and, on August 17, wind speeds peaked for the entire period.
 
 # Comparison of hurricane exposure and buoy data  (Clare)
 
 # Variogram  (Karida)
+We want to use known spatial data to predict unknown quantity based on geographic similarities.
+Kriging model helps with our prediction on elevation of unknown point by referencing the closest known neighbor points.
+Distances with the predicted point are different, so we will use variogram to weight the known points.  
+Assumption:
+1.Stationarity  
+2.Constant variagram  
+When we focus on the chunk of Irene Landing area, the change in elevation based on change in distance between two locations should be about the same.  
 
+First, let's take a look at the data source from hurricane exposure:
+```{r, fig.align = 'center', out.width = "65%"}
+knitr::include_graphics(here::here("Vario_Hur.png"))
+```
+This is a variogram of data sources from NOAA Data Buoys
+```{r, fig.align = 'center', out.width = "65%"}
+knitr::include_graphics(here::here("Vario_b.png"))
+```
+We used the Gaussian Model for both, and we were able to generate the graph, however, both of them violated the assumption I mention above. When we fitted the model, fit.method should equal to 7, but fit.method 7 won't work with zero distance semivariances, so we tried to use fit.method=2. It worked, but it influenced the accuracy. We don't think variogram could help in this case because not only we didn't have enough buoys points, but also assumption violation didn't allow us to make a accurate prediction.
 # Conclusions 
