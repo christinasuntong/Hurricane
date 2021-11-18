@@ -9,9 +9,9 @@ library(lubridate)
 
 
 
-buoy_coord <- data.frame(id = c("41037", "BFTN7", "JMPN7", "41110" , "41025", "HCGN7", "CLKN7", "44056"), 
-                         lat = c(33.988,34.717,34.213,34.142, 35.010,35.209, 34.622,36.200 ),
-                         lon = c(77.362,76.671,77.786, 77.715,75.454,75.704, 76.525, 75.714))
+buoy_coord <- data.frame(id = c("41037", "BFTN7", "JMPN7","HCGN7", "CLKN7"), 
+                         lat = c(33.988,34.717,34.213,35.209, 34.622),
+                         lon = c(77.362,76.671,77.786,75.704, 76.525))
 
 buoy_coord$lon <- buoy_coord$lon * -1
 buoy_coord$id  %<>% tolower()
