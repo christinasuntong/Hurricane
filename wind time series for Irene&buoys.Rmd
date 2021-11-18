@@ -159,6 +159,8 @@ ggarrange(wind_Irene,
 # wind speed plot for five buoys
 ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
   geom_line()+
-  ggtitle("Wind speed of buoys")
+  ggtitle("Wind speed of buoys")+
+  theme(plot.title = element_text(size = 50, face = "bold"))+ 
+  theme(legend.text=element_text(size=20))
 
 ```
