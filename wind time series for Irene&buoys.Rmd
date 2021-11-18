@@ -32,6 +32,7 @@ ht$date <- ymd_hm(ht$date)
 
 wind_Irene <- ht %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
   # geom_point()+
+  scale_y_continuous(name="WSPD")+
   geom_line()+
   ggtitle("Wind change of Irene")
 
@@ -153,10 +154,6 @@ ggarrange(wind_Irene,
 #   geom_line(data = August_jmpn7, aes(x = date, y = WSPD))+
 #   geom_line(data = August_hcgn7, aes(x = date, y = WSPD))+
 #   ggtitle("Wind change of all bouys")
-
-ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
-  geom_line()
-
 
 # wind speed plot for five buoys
 ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
