@@ -114,11 +114,8 @@ August_hcgn7 <- date_hcgn7[date_hcgn7$date %within% rng, ]
 
 wind_hcgn7 <- ggplot(August_hcgn7, aes(x = date, y = WSPD))+
   geom_line()+
-<<<<<<< HEAD
-  ggtitle("Wind change by mrhcgn7")
-=======
   ggtitle("Wind change by hcgn7")
->>>>>>> 339a96e5018dc101a79d4a37afccb113fa408153
+
 
 
 ```
