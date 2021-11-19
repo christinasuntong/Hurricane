@@ -2,16 +2,17 @@
 title: "Hurricane Irene Landfall Report"
 author: 'Irene Group: Rose Determan, Yongrong Chai, Zike Tang, Tong Sun'
 date: "11/19/2021"
-output:
-  html_document:
-    df_print: paged
+output: pdf_document
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+source("buoy import-a.R")
+source("Figures.R")
+pacman::p_load(mapview)
 ```
-# Introduction  (Rose)
+
+# Introduction
 ```{r, fig.align = 'center', out.width = "50%", fig.cap = "Hurricane Irene making landfall at 07:49 on August 27, 2011 Source: https://www.weather.gov/mhx/Aug272011EventReview"}
 knitr::include_graphics(here::here("landfall.jpg"))
 ```
@@ -20,15 +21,10 @@ Hurricane Irene was a category 1 tropical cyclone that impacted the Caribbean, t
 knitr::include_graphics(here::here("Irene-damage5.jpg"))
 ```
 
-
 # EDA  (Rose and Christina)
 
 # Map of Landfall Area  (Christina)
-```{r, include=FALSE}
-source("buoy import-a.R")
-library(mapview)
-```
-Following the hurricane’s (Irene-2011) track, we choose five buoys which are probably in the path of the hurricane from NOAA website. The five buoys are ‘41037’, ‘BFTN7’, ‘JMPN7’, ‘HCGN7’ and ‘CLKN7’. Here we draw a map to show where they are, as well as their coordinates. From the map we can find that buoy ‘BFTN7’, ‘JMPN7’ and ‘CLKN7’ are on the shore. And the other two — ‘41037’ and ‘HCGN7’ are in the sea. The NOAA website tells us more descriptions of these five buoys. We will show that wind speeds recorded by each buoy are totally different as follow. The wind speeds recorded from the buoys in the sea are much higher than those from buoys on the shore, which displays the exist of hurricane.
+Following the hurricane’s (Irene-2011) track, we choose several buoys which are in the path of the hurricane from NOAA website. The five buoys are ‘41037’, ‘BFTN7’, ‘JMPN7’, ‘HCGN7’ and ‘CLKN7’. Here we draw a map to show where they are, as well as their coordinates. From the map we can find that buoy ‘BFTN7’, ‘JMPN7’ and ‘CLKN7’ are on the shore. And the other two — ‘41037’ and ‘HCGN7’ are in the sea. The NOAA website tells us more descriptions of these five buoys. We will show that wind speeds recorded by each buoy are totally different as follow. The wind speeds recorded from the buoys in the sea are much higher than those from buoys on the shore, which displays the exist of hurricane.
 
 ```{r, fig.align='center', out.width="60%", fig.cap = "Map of Landfall Area with Coordinates. Source:https://www.ndbc.noaa.gov"}
 knitr::include_graphics(here::here("buoy map.png"))
