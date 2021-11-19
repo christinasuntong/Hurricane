@@ -1,17 +1,9 @@
-library(tidyverse)
-library(magrittr)
-library(lubridate)
-
-### reading data from buoy 44013  --  outside Boston harbor
-### make URLs by splitting the URL into two pieces --
-### "before the year" and "after the year"
+pacman::p_load(tidyverse, magrittr, lubridate, ggplot2, maps, mapdata)
 
 
-
-
-buoy_coord <- data.frame(id = c("41037", "BFTN7", "JMPN7","HCGN7", "CLKN7", "41013", "44099"), 
-                         lat = c(33.988,34.717,34.213,35.209, 34.622, 33.441, 36.915),
-                         lon = c(77.362,76.671,77.786,75.704, 76.525, 77.764, 75.722))
+buoy_coord <- data.frame(id = c("41037", "BFTN7","JMPN7","HCGN7","CLKN7","41013","44099","41004","WATS1",   "MNPV2"), 
+                         lat = c(33.988, 34.717, 34.213, 35.209, 34.622, 33.441, 36.915,  32.502, 34.335,   36.778      ),
+                         lon = c(77.362, 76.671, 77.786, 75.704, 76.525, 77.764, 75.722,  79.099, 80.7027,   76.302))
 
 buoy_coord$lon <- buoy_coord$lon * -1
 buoy_coord$id  %<>% tolower()
@@ -56,4 +48,8 @@ for (i in 1:N){
 all_buoys$WSPD <- as.numeric(all_buoys$WSPD)
 
 all_buoys %<>% filter(WSPD<99)
+
+
+
+
 
