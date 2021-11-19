@@ -21,13 +21,13 @@ Hurricane Irene was a category 1 tropical cyclone that impacted the Caribbean, t
 knitr::include_graphics(here::here("Irene-damage5.jpg"))
 ```
 
-# EDA  (Rose and Christina)
-
-# Map of Landfall Area  (Christina)
-Following the hurricane’s (Irene-2011) track, we choose several buoys which are in the path of the hurricane from NOAA website. The five buoys are ‘41037’, ‘BFTN7’, ‘JMPN7’, ‘HCGN7’ and ‘CLKN7’. Here we draw a map to show where they are, as well as their coordinates. From the map we can find that buoy ‘BFTN7’, ‘JMPN7’ and ‘CLKN7’ are on the shore. And the other two — ‘41037’ and ‘HCGN7’ are in the sea. The NOAA website tells us more descriptions of these five buoys. We will show that wind speeds recorded by each buoy are totally different as follow. The wind speeds recorded from the buoys in the sea are much higher than those from buoys on the shore, which displays the exist of hurricane.
+# EDA and Map of Landfall Area  (Rose Christina)
+Following the hurricane’s (Irene-2011) track, we choose several buoys which are in the path of the hurricane from NOAA website. The ten buoys are identified as
+"41037", "BFTN7","JMPN7","HCGN7","CLKN7","41013","44099","41004","WATS1", and "MNPV2". Here we draw a map to show where they are, as well as their coordinates. From the map we can find that there is a mix of buoys that are inland and close to shore and buoys that are off shore. The NOAA website tells us more descriptions of these buoys. We will show that wind speeds recorded by each buoy are totally different as follow. The wind speeds recorded from the buoys in the sea are much higher than those from buoys on the shore, which displays the exist of hurricane.
 
 ```{r, fig.align='center', out.width="60%", fig.cap = "Map of Landfall Area with Coordinates. Source:https://www.ndbc.noaa.gov"}
-knitr::include_graphics(here::here("buoy map.png"))
+static_map()
+#knitr::include_graphics(here::here("buoy map.png"))
 ```
 
 
