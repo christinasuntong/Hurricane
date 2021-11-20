@@ -40,11 +40,22 @@ knitr::include_graphics(here::here("WindSpeed1.png"))
 The data source we used here was from NOAA Data Buoys, the dot on maps represent mean wind speed by date and each buoy, and it allowed us to see how winds speed varied by days in August 2011. From August 25 to 27, we can see that the size of dot was increasing. So let's look at the plot below.
 
 ```{r, fig.align = 'center', out.width = "70%"}
-knitr::include_graphics(here::here("WindSpeed2.png"))
+knitr::include_graphics(here::here("ws of buoys_combined.png"))
 ```
 It allowed us to observe the fluctuation clearly, and wind speed recorded from all buoys above reflect a similar tendency, and, on August 17, wind speeds peaked for the entire period.
 
 # Comparison of hurricane exposure and buoy data  (Clare)
+
+We made the time series plot of wind speed of Irene from the package of 'hurricaneexposuredata' package. The plot shows that Irene lasted from 22 Aug to 30 Aug, with the wind speed arriving the highest between 24 Aug and 25 Aug and going down in the following days. 
+
+```{r, fig.align = 'center', out.width = "70%"}
+knitr::include_graphics(here::here("ws of Irene.png"))
+```
+Here follows our plots for wind speed of each buoy. Obviously, the wind speed for all these buoys peaked between 27 Aug and 28 Aug. We made a draft conclusion that when Irene arrived its highest wind speed, it located on the sea because the buyos we chosen locate mostly along the coast. Plus, Irene arrived landfall between 27 Aug and 28 Aug as we see from the wind speed of buoys. 
+
+```{r, fig.align = 'center', out.width = "70%"}
+knitr::include_graphics(here::here("ws of buoys_separated.png"))
+```
 
 # Variogram  (Karida)
 We want to use known spatial data to predict unknown quantity based on geographic similarities.
