@@ -2,7 +2,9 @@
 title: "Hurricane Irene Landfall Report"
 author: 'Irene Group: Rose Determan, Yongrong Chai, Zike Tang, Tong Sun'
 date: "11/19/2021"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -62,4 +64,9 @@ This is a variogram of data sources from NOAA Data Buoys
 knitr::include_graphics(here::here("Vario_b.png"))
 ```
 We used the Gaussian Model for both, and we were able to generate the graph, however, both of them violated the assumption I mention above. When we fitted the model, fit.method should equal to 7, but fit.method 7 won't work with zero distance semivariances, so we tried to use fit.method=2. It worked, but it influenced the accuracy. We don't think variogram could help in this case because not only we didn't have enough buoys points, but also assumption violation didn't allow us to make a accurate prediction.
-# Conclusions 
+# Conclusions (Christina)
+We got several conclusions from the plots above:
+1.From the wind speed plot,we found that:
+(1)The wind speeds are different for each buoy.If we just compare the changes in wind speed on the vertical axis,the ranges of each buoy vary obviously.The order from smallest to largest is "clkn7" > "hcgn7" > "jmpn7" > "41037' > "bftn7".If we combine this with the map of Landfall area.We can probably find that the wind speed varies the most near the coastline(from buoy "clkn7" and "hcgn7"), followed by the sea(from buoy "jmpn7" and "41037"), and finally over land(from buoy "bftn7").
+(2)If we look at the change of wind speed over time from the horizontal axis,we can find that the order of maximum value coming with time is: "jmpn7"-"hcgn7"-"41037"-"hcgn7"-"bftn7".This makes sense when combined with the hurricane's track.
+2.From the variogram part,we can probably find that the change in elevation based on change in distance between two locations should be about the same.But we cannot make more accurate conclusions due to small size of data and assumption violation.
