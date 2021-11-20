@@ -28,7 +28,8 @@ wind_Irene <- Irene_t %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot t
   # geom_point()+
   scale_y_continuous(name="WSPD")+
   geom_line()+
-  ggtitle("Wind change of Irene")
+  ggtitle("Wind change of Irene")+
+  theme(plot.title = element_text(size = 25, face = "bold"))
 wind_Irene
 
 ```
