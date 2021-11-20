@@ -20,153 +20,24 @@ library(hurricaneexposure)
 
 ## plots comparing wind speed from Irene and bouys
 
-```{r, fig.width=10, fig.height=2}
+```{r, fig.width=8, fig.height=1.5}
 data("hurr_tracks")
-ht <- hut %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
+Irene_t <- hurr_tracks %>% filter(storm_id == "Irene-2011")
+Irene_t$date <- ymd_hm(Irene_t$date)
+wind_Irene <- Irene_t %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
   # geom_point()+
   scale_y_continuous(name="WSPD")+
   geom_line()+
   ggtitle("Wind change of Irene")
-
-rr_tracks %>% filter(storm_id == "Irene-2011")
-# Irene_track <- ht %>% separate(col = date, 
-#                 into = c("YY", "MM", "DD", "hh", "mm"), 
-#                 sep = c(4, 6, 8, 10))
-
-str(ht)
-ht$date <- ymd_hm(ht$date)
-
-wind_Irene <- h
-```
-
-# wind speed for buoys
-```{r}
-# mr41037, mr41110, mr44056, mrbftn7, mrclkn7, mrjmpn7, mrhcgn7
-
-# define buoys date range from Irene
-date_l <- as.POSIXct(min(ht$date))
-date_u <- as.POSIXct(max(ht$date))
-rng <- interval(date_l, date_u)
-
-# 41004
-`41004` <- `41004`[-1, ]
-`41004`$WSPD <- as.numeric(`41004`$WSPD)
-date_41037 <- `41004` %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
-date_41037$date <- ymd_hm(date_41037$date)
-
-
-August_41004 <- date_41004[date_41004$date %within% rng, ]
-
-wind_41004 <- ggplot(August_41004, aes(x = date, y = WSPD))+
-  geom_line()+
-  ggtitle("Wind change by 41004")
-
-# 41037
-`41037` <- `41037`[-1, ]
-`41037`$WSPD <- as.numeric(`41037`$WSPD)
-date_41037 <- `41037` %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
-date_41037$date <- ymd_hm(date_41037$date)
-
-
-August_41037 <- date_41037[date_41037$date %within% rng, ]
-
-wind_41037 <- ggplot(August_41037, aes(x = date, y = WSPD))+
-  geom_line()+
-  ggtitle("Wind change by 41037")
-
-
-# bftn7
-bftn7 <- bftn7[-1, ]
-bftn7$WSPD <- as.numeric(bftn7$WSPD)
-bftn7 <- bftn7 %>% filter(WSPD != 99)
-date_bftn7 <- bftn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
-date_bftn7$date <- ymd_hm(date_bftn7$date)
-
-August_bftn7 <- date_bftn7[date_bftn7$date %within% rng, ]
-
-wind_bftn7 <- ggplot(August_bftn7, aes(x = date, y = WSPD))+
-  geom_line()+
-  ggtitle("Wind change by bftn7")
-
-
-# clkn7
-clkn7 <- clkn7[-1, ]
-clkn7$WSPD <- as.numeric(clkn7$WSPD)
-date_clkn7 <- clkn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
-date_clkn7$date <- ymd_hm(date_clkn7$date)
-
-August_clkn7 <- date_clkn7[date_clkn7$date %within% rng, ]
-
-wind_clkn7 <- ggplot(August_clkn7, aes(x = date, y = WSPD))+
-  geom_line()+
-  ggtitle("Wind change by clkn7")
-
-
-# jmpn7
-jmpn7 <- jmpn7[-1, ]
-jmpn7$WSPD <- as.numeric(jmpn7$WSPD)
-date_jmpn7 <- jmpn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
-date_jmpn7$date <- ymd_hm(date_jmpn7$date)
-
-August_jmpn7 <- date_jmpn7[date_jmpn7$date %within% rng, ]
-August_jmpn7 <- August_jmpn7 %>% filter(WSPD != 99)
-
-wind_jmpn7 <- ggplot(August_jmpn7, aes(x = date, y = WSPD))+
-  geom_line()+
-  ggtitle("Wind change by jmpn7")
-
-
-# hcgn7
-hcgn7 <- hcgn7[-1, ]
-hcgn7$WSPD <- as.numeric(hcgn7$WSPD)
-hcgn7 <- hcgn7 %>% filter(WSPD != 99)
-date_hcgn7 <- hcgn7 %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
-date_hcgn7$date <- ymd_hm(date_hcgn7$date)
-
-August_hcgn7 <- date_hcgn7[date_hcgn7$date %within% rng, ]
-
-wind_hcgn7 <- ggplot(August_hcgn7, aes(x = date, y = WSPD))+
-  geom_line()+
-  ggtitle("Wind change by hcgn7")
-
-
+wind_Irene
 
 ```
 
 
-# combined plot
-```{r, fig.width=8, fig.height=10}
+## Combined plots
+```{r, fig.width=18, fig.height=8}
+
 # Sys.setlocale("LC_ALL", "English")
-
-ggarrange(wind_Irene, 
-          wind_41037,
-          wind_bftn7, 
-          wind_clkn7, 
-          wind_jmpn7, 
-          wind_hcgn7, 
-          ncol = 1, nrow = 6)
-
-# Irene plot shows that the maximum wind speed arrived between Aug 24 and Aug 25
-# landfall buoys shows that the maximum wind speed arrived between Aug 27 and Aug 28
-# Irene arrived landfall between Aug 27 and Aug 28? but this is not the time when Irene had its highest wind speed
-
-
-
-
-
-```
-
-
-```{r, fig.width=10, fig.height=9}
-
-
-# ggplot()+
-#   geom_line(data = August_41037, aes(x = date, y = WSPD))+
-#   geom_line(data = August_bftn7, aes(x = date, y = WSPD))+
-#   geom_line(data = August_clkn7, aes(x = date, y = WSPD))+
-#   geom_line(data = August_jmpn7, aes(x = date, y = WSPD))+
-#   geom_line(data = August_hcgn7, aes(x = date, y = WSPD))+
-#   ggtitle("Wind change of all bouys")
 
 # wind speed plot for five buoys
 ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
@@ -175,12 +46,18 @@ ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y 
   theme(plot.title = element_text(size = 50, face = "bold"))+ 
   theme(legend.text=element_text(size=20))
 
+```
+
+
+```{r, fig.width=10, fig.height=8}
 ts_bouys <- ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
   geom_line()+
   ggtitle("Wind speed of buoys")+
-  theme(plot.title = element_text(size = 50, face = "bold"))+ 
+  theme(plot.title = element_text(size = 30, face = "bold"))+ 
   theme(legend.text=element_text(size=20))+
   facet_grid(id ~. )+
   theme(legend.position = "none")
+
+ts_bouys
 
 ```
