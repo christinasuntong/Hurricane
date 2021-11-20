@@ -20,9 +20,15 @@ library(hurricaneexposure)
 
 ## plots comparing wind speed from Irene and bouys
 
-```{r}
+```{r, fig.width=10, fig.height=2}
 data("hurr_tracks")
-ht <- hurr_tracks %>% filter(storm_id == "Irene-2011")
+ht <- hut %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
+  # geom_point()+
+  scale_y_continuous(name="WSPD")+
+  geom_line()+
+  ggtitle("Wind change of Irene")
+
+rr_tracks %>% filter(storm_id == "Irene-2011")
 # Irene_track <- ht %>% separate(col = date, 
 #                 into = c("YY", "MM", "DD", "hh", "mm"), 
 #                 sep = c(4, 6, 8, 10))
@@ -30,13 +36,7 @@ ht <- hurr_tracks %>% filter(storm_id == "Irene-2011")
 str(ht)
 ht$date <- ymd_hm(ht$date)
 
-wind_Irene <- ht %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
-  # geom_point()+
-  scale_y_continuous(name="WSPD")+
-  geom_line()+
-  ggtitle("Wind change of Irene")
-
-
+wind_Irene <- h
 ```
 
 # wind speed for buoys
@@ -48,6 +48,18 @@ date_l <- as.POSIXct(min(ht$date))
 date_u <- as.POSIXct(max(ht$date))
 rng <- interval(date_l, date_u)
 
+# 41004
+`41004` <- `41004`[-1, ]
+`41004`$WSPD <- as.numeric(`41004`$WSPD)
+date_41037 <- `41004` %>% mutate(date = paste(`#YY`, `MM`, `DD`, `hh`, `mm`, sep = ""))
+date_41037$date <- ymd_hm(date_41037$date)
+
+
+August_41004 <- date_41004[date_41004$date %within% rng, ]
+
+wind_41004 <- ggplot(August_41004, aes(x = date, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind change by 41004")
 
 # 41037
 `41037` <- `41037`[-1, ]
@@ -145,7 +157,7 @@ ggarrange(wind_Irene,
 ```
 
 
-```{r, fig.width=18, fig.height=8}
+```{r, fig.width=10, fig.height=9}
 
 
 # ggplot()+
@@ -162,5 +174,13 @@ ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y 
   ggtitle("Wind speed of buoys")+
   theme(plot.title = element_text(size = 50, face = "bold"))+ 
   theme(legend.text=element_text(size=20))
+
+ts_bouys <- ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
+  geom_line()+
+  ggtitle("Wind speed of buoys")+
+  theme(plot.title = element_text(size = 50, face = "bold"))+ 
+  theme(legend.text=element_text(size=20))+
+  facet_grid(id ~. )+
+  theme(legend.position = "none")
 
 ```
