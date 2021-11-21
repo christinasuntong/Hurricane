@@ -13,3 +13,27 @@ static_map <- function(){
     geom_point(data = buoy_coord, aes(x = lon, y = lat), color = "black", fill = "white", size = 3, shape = 21)+
     theme_nothing()
 }
+
+
+library(knitr)
+knit('ws_of_Irene&buoys.Rmd', tangle=TRUE)
+source("ws_of_Irene&buoys.R")
+
+ws_Irene <- function(){
+  Irene_t %>% ggplot(aes(x = date, y = wind/1.94384))+ # turn knot to m/s
+    # geom_point()+
+    scale_y_continuous(name="WSPD")+
+    geom_line()+
+    ggtitle("Wind change of Irene")+
+    theme(plot.title = element_text(size = 25, face = "bold"))
+}
+
+ws_buoys <- function(){
+  ggplot(data = all_buoys, mapping = aes(group = id, color = id, x = date_time, y = WSPD))+
+    geom_line()+
+    ggtitle("Wind speed of buoys")+
+    theme(plot.title = element_text(size = 30, face = "bold"))+ 
+    theme(legend.text=element_text(size=20))+
+    facet_grid(id ~. )+
+    theme(legend.position = "none")
+}
