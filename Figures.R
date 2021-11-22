@@ -12,6 +12,8 @@ static_map <- function(){
   ggmap(map) + 
     geom_point(data = buoy_coord, aes(x = lon, y = lat), color = "black", fill = "white", size = 3, shape = 21)+
     theme_nothing()
+  
+  ggsave("static_map.png")
 }
 
 

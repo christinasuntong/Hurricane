@@ -2,12 +2,9 @@
 title: "Hurricane Irene Landfall Report"
 author: 'Irene Group: Rose Determan, Yongrong Chai, Zike Tang, Tong Sun'
 date: "11/19/2021"
-output:
-  html_document:
-    df_print: paged
+output: pdf_document
 ---
-
-```{r setup, include=FALSE}
+```{r setup, include=FALSE,warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 source("buoy import-a.R")
 source("Figures.R")
@@ -15,49 +12,49 @@ pacman::p_load(mapview)
 ```
 
 # Introduction
-```{r, fig.align = 'center', out.width = "50%", fig.cap = "Hurricane Irene making landfall at 07:49 on August 27, 2011 Source: https://www.weather.gov/mhx/Aug272011EventReview"}
+```{r, echo = FALSE, fig.align = 'center', out.width = "50%", fig.cap = "Hurricane Irene making landfall at 07:49 on August 27, 2011 Source: https://www.weather.gov/mhx/Aug272011EventReview"}
 knitr::include_graphics(here::here("landfall.jpg"))
 ```
 Hurricane Irene was a category 1 tropical cyclone that impacted the Caribbean, the Atlantic coast of the United States and Canada in late August of 2011. The storm made landfall in North Carolina on August 27th. Due to the storm, there were five deaths. Peak wind speeds were 115 mph, and several tornadoes formed in addition to the hurricane. This storm caused extensive damage to infrastructure along the coast. 
-```{r, fig.align = 'center', out.width = "75%", fig.cap = "Storm damage in Eastern North Carolina as a result of Hurricane Irene.  Source: https://www.weather.gov/mhx/Aug272011EventReview"}
+```{r, echo = FALSE, fig.align = 'center', out.width = "75%", fig.cap = "Storm damage in Eastern North Carolina as a result of Hurricane Irene.  Source: https://www.weather.gov/mhx/Aug272011EventReview"}
 knitr::include_graphics(here::here("Irene-damage5.jpg"))
 ```
 
-# EDA and Map of Landfall Area  (Rose Christina)
+# EDA and Map of Landfall Area
 Following the hurricane’s (Irene-2011) track, we choose several buoys which are in the path of the hurricane from NOAA website. The ten buoys are identified as
 "41037", "BFTN7","JMPN7","HCGN7","CLKN7","41013","44099","41004","WATS1", and "MNPV2". Here we draw a map to show where they are, as well as their coordinates. From the map we can find that there is a mix of buoys that are inland and close to shore and buoys that are off shore. The NOAA website tells us more descriptions of these buoys. We will show that wind speeds recorded by each buoy are totally different as follow. The wind speeds recorded from the buoys in the sea are much higher than those from buoys on the shore, which displays the exist of hurricane.
 
-```{r, fig.align='center', out.width="60%", fig.cap = "Map of Landfall Area with Coordinates. Source:https://www.ndbc.noaa.gov"}
-static_map()
-#knitr::include_graphics(here::here("buoy map.png"))
+```{r,echo = FALSE,  fig.align='center', out.width="60%", fig.cap = "Map of Landfall Area with Coordinates. Source:https://www.ndbc.noaa.gov"}
+#static_map()
+knitr::include_graphics(here::here("static_map.png"))
 ```
 
 
-# Map of Windspeed  (Karida)
-```{r, fig.align = 'center', out.width = "80%"}
+# Map of Windspeed
+```{r,echo = FALSE,  fig.align = 'center', out.width = "80%"}
 knitr::include_graphics(here::here("WindSpeed1.png"))
 ```
 The data source we used here was from NOAA Data Buoys, the dot on maps represent mean wind speed by date and each buoy, and it allowed us to see how winds speed varied by days in August 2011. From August 25 to 27, we can see that the size of dot was increasing. So let's look at the plot below.
 
-```{r, fig.align = 'center', out.width = "70%"}
+```{r,echo = FALSE,  fig.align = 'center', out.width = "70%"}
 knitr::include_graphics(here::here("ws of buoys_combined.png"))
 ```
 It allowed us to observe the fluctuation clearly, and wind speed recorded from all buoys above reflect a similar tendency, and, on August 17, wind speeds peaked for the entire period.
 
-# Comparison of hurricane exposure and buoy data  (Clare)
+# Comparison of hurricane exposure and buoy data
 
 We made the time series plot of wind speed of Irene from the package of 'hurricaneexposuredata' package. The plot shows that Irene lasted from 22 Aug to 30 Aug, with the wind speed arriving the highest between 24 Aug and 25 Aug and going down in the following days. 
 
-```{r, fig.align = 'center', out.width = "70%"}
+```{r,echo = FALSE,  fig.align = 'center', out.width = "70%"}
 knitr::include_graphics(here::here("ws of Irene.png"))
 ```
 Here follows our plots for wind speed of each buoy. Obviously, the wind speed for all these buoys peaked between 27 Aug and 28 Aug. We made a draft conclusion that when Irene arrived its highest wind speed, it located on the sea because the buyos we chosen locate mostly along the coast. Plus, Irene arrived landfall between 27 Aug and 28 Aug as we see from the wind speed of buoys. 
 
-```{r, fig.align = 'center', out.width = "70%"}
+```{r,echo = FALSE,  fig.align = 'center', out.width = "70%"}
 knitr::include_graphics(here::here("ws of buoys_separated.png"))
 ```
 
-# Variogram  (Karida)
+# Variogram
 We want to use known spatial data to predict unknown quantity based on geographic similarities.
 Kriging model helps with our prediction on elevation of unknown point by referencing the closest known neighbor points.
 Distances with the predicted point are different, so we will use variogram to weight the known points.  
@@ -67,15 +64,15 @@ Assumption:
 When we focus on the chunk of Irene Landing area, the change in elevation based on change in distance between two locations should be about the same.  
 
 First, let's take a look at the data source from hurricane exposure:
-```{r, fig.align = 'center', out.width = "65%"}
+```{r,echo = FALSE,  fig.align = 'center', out.width = "65%"}
 knitr::include_graphics(here::here("Vario_Hur.png"))
 ```
 This is a variogram of data sources from NOAA Data Buoys
-```{r, fig.align = 'center', out.width = "65%"}
+```{r, echo = FALSE, fig.align = 'center', out.width = "65%"}
 knitr::include_graphics(here::here("Vario_b.png"))
 ```
 We used the Gaussian Model for both, and we were able to generate the graph, however, both of them violated the assumption I mention above. When we fitted the model, fit.method should equal to 7, but fit.method 7 won't work with zero distance semivariances, so we tried to use fit.method=2. It worked, but it influenced the accuracy. We don't think variogram could help in this case because not only we didn't have enough buoys points, but also assumption violation didn't allow us to make a accurate prediction.
-# Conclusions (Christina)
+# Conclusions
 We got several conclusions from the plots above:
 1.From the wind speed plot,we found that:
 (1)The wind speeds are different for each buoy.If we just compare the changes in wind speed on the vertical axis,the ranges of each buoy vary obviously.The order from smallest to largest is "clkn7" > "hcgn7" > "jmpn7" > "41037' > "bftn7".If we combine this with the map of Landfall area.We can probably find that the wind speed varies the most near the coastline(from buoy "clkn7" and "hcgn7"), followed by the sea(from buoy "jmpn7" and "41037"), and finally over land(from buoy "bftn7").
